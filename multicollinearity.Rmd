@@ -1,0 +1,39 @@
+---
+title: "Multicollinearity Test"
+author: "Suryanshu"
+date: "6 February 2018"
+output: word_document
+---
+#Loading of Data
+```{r}
+library(MASS)
+#reading the dataset into data
+data <- Boston
+str(data)
+```
+
+#Collinearity Test using VIF
+```{r}
+library(usdm)
+df = data
+vif(df)
+#If VIF > 4.0 then I generally assume multicollinearity remove all those 
+#Predictor Variables before fitting them into my model
+```
+
+#collinearity Testr using omcdiag
+```{r}
+library(mctest)
+x <- data[,-14]
+y <- data[,14]
+
+omcdiag(x,y, detr=0.001, conf=0.99)
+```
+
+#Plot of multicollinearity
+```{r}
+mc.plot(x, y, Inter = FALSE, vif = 10, ev = 0.01)
+mc.plot(x, y)
+mc.plot(x, y, vif = 5, ev =  0.2)
+```
+
